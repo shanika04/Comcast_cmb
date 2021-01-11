@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0"> 
+
+    <servlet>
+        <servlet-name>CNSControllerServlet</servlet-name>
+        <servlet-class>com.comcast.cns.controller.CNSControllerServlet</servlet-class>
+	    <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CNSControllerServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+	<servlet>
+		<servlet-name>EndpointServlet</servlet-name>
+		<servlet-class>com.comcast.cmb.common.controller.EndpointServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EndpointServlet</servlet-name>
+		<url-pattern>/Endpoint/*</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>AdminServlet</servlet-name>
+    	<servlet-class>com.comcast.cmb.common.controller.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>AdminServlet</servlet-name>
+    	<url-pattern>/webui/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet>
+		<servlet-name>CMBVisualizerServlet</servlet-name>
+		<servlet-class>com.comcast.cmb.common.controller.CMBVisualizerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CMBVisualizerServlet</servlet-name>
+		<url-pattern>/webui/cmbvisualizer/*</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSUserPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSUserPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSUserPageServlet</servlet-name>
+    	<url-pattern>/webui/cnsuser/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CQSUserPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cqs.controller.CQSUserPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CQSUserPageServlet</servlet-name>
+    	<url-pattern>/webui/cqsuser/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>UserLoginPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cmb.common.controller.UserLoginPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>UserLoginPageServlet</servlet-name>
+    	<url-pattern>/webui/userlogin/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>UserPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cmb.common.controller.UserPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>UserPageServlet</servlet-name>
+    	<url-pattern>/webui/user/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSSubscriptionPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSSubscriptionPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSSubscriptionPageServlet</servlet-name>
+    	<url-pattern>/webui/cnsuser/subscription/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSPublishToTopicPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSPublishToTopicPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSPublishToTopicPageServlet</servlet-name>
+    	<url-pattern>/webui/cnsuser/publish/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSEditTopicDisplayNamePage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSEditTopicDisplayNamePage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSEditTopicDisplayNamePage</servlet-name>
+    	<url-pattern>/webui/cnsuser/editdisplayname/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSEditTopicDeliveryPolicyPage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSEditTopicDeliveryPolicyPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSEditTopicDeliveryPolicyPage</servlet-name>
+    	<url-pattern>/webui/cnsuser/editdeliverypolicy/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSEditSubscriptionDeliveryPolicyPage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSEditSubscriptionDeliveryPolicyPage</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>CNSEditSubscriptionDeliveryPolicyPage</servlet-name>
+    	<url-pattern>/webui/cnsuser/subscription/editdeliverypolicy/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSRawMessageDeliveryPolicyPage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSRawMessageDeliveryPolicyPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSRawMessageDeliveryPolicyPage</servlet-name>
+    	<url-pattern>/webui/cnsuser/subscription/rawmessagedeliverypolicy/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSTopicPermissionPage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSTopicPermissionPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSTopicPermissionPage</servlet-name>
+    	<url-pattern>/webui/cnsuser/permission/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CNSTopicAddPermissionPage</servlet-name>
+    	<servlet-class>com.comcast.cns.controller.CNSTopicAddPermissionPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CNSTopicAddPermissionPage</servlet-name>
+    	<url-pattern>/webui/cnsuser/addpermission/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CQSQueueMessagesPageServlet</servlet-name>
+    	<servlet-class>com.comcast.cqs.controller.CQSQueueMessagesPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CQSQueueMessagesPageServlet</servlet-name>
+    	<url-pattern>/webui/cqsuser/message/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CQSAddQueuePermissionPage</servlet-name>
+    	<servlet-class>com.comcast.cqs.controller.CQSAddQueuePermissionPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CQSAddQueuePermissionPage</servlet-name>
+    	<url-pattern>/webui/cqsuser/addpermission/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>CQSQueuePermissionsPage</servlet-name>
+    	<servlet-class>com.comcast.cqs.controller.CQSQueuePermissionsPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>CQSQueuePermissionsPage</servlet-name>
+    	<url-pattern>/webui/cqsuser/permissions/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet>
+		<servlet-name>CNSWorkerStatePageServlet</servlet-name>
+		<servlet-class>com.comcast.cns.controller.CNSWorkerStatePageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CNSWorkerStatePageServlet</servlet-name>
+		<url-pattern>/webui/cnsworkerstate/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CQSAPIStatePageServlet</servlet-name>
+		<servlet-class>com.comcast.cqs.controller.CQSAPIStatePageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CQSAPIStatePageServlet</servlet-name>
+		<url-pattern>/webui/cqsapistate/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>CQSEditQueueAttributePage</servlet-name>
+    	<servlet-class>com.comcast.cqs.controller.CQSEditQueueAttributePage</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>CQSEditQueueAttributePage</servlet-name>
+    	<url-pattern>/webui/cqsuser/editqueueattributes/*</url-pattern>
+  	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CMBStatsServlet</servlet-name>
+		<servlet-class>com.comcast.cmb.common.controller.CMBStatsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CMBStatsServlet</servlet-name>
+		<url-pattern>/webui/cmbcallstats/*</url-pattern>
+	</servlet-mapping>
+    
+</web-app>

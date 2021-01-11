@@ -1,0 +1,413 @@
+CMB VERSION 2.2.46
+--------------------------------------------------------------------
+
+Bug fixes:
+
+- fix UTF validation (issue 49)
+
+CMB VERSION 2.2.45
+--------------------------------------------------------------------
+
+Bug fixes:
+
+- fix performance degradation during Redis outage (issue 44)
+
+CMB VERSION 2.2.44
+--------------------------------------------------------------------
+
+Bug fixes:
+
+- fix for SendMessage() reporting an error when Redis is offline 
+  (issue 43)
+- fix for null pointer exception for certain scenarios logging 
+  long poll times
+- allow queue url to be passed in as url parameter (issue 37)
+- fix for unicode validations (issue 39)
+
+Misc:
+
+- improved documentation
+- draft Vagrantfile for bootstrapping single node CMB including C* 
+  and Redis 
+
+CMB VERSION 2.2.43
+--------------------------------------------------------------------
+
+New features:
+
+- message attributes for CNS and CQS
+
+Bug fixes:
+
+- fix for Cassanndra 2.1 counter columns (prior to fix publishing 
+  from CNS to CQS would not work for Cassandra versions >= 2.1.*
+  
+Misc:
+
+- Renamed ClearQueue() API to PurgeQueue()
+
+CMB VERSION 2.2.42
+--------------------------------------------------------------------
+
+Bug fixes:
+
+- lost messages when using more than Redis shard (was introduced 
+  with 2.2.41)
+  
+Misc:
+
+- allow to set Cassandra credentials in Astyanax driver using 
+  properties cmb.cassandra.username and cmb.cassandra.password
+- stream-lined logging
+
+CMB VERSION 2.2.41
+--------------------------------------------------------------------
+
+New features:
+
+- use Redis Sorted Set for cache layer
+- upgrade jedis version to 2.4.2
+
+Bug fixes:
+
+- when an exception is raised by Astyanax put message id back into queue
+- fix CQS error codes
+
+CMB VERSION 2.2.40
+--------------------------------------------------------------------
+
+New features:
+
+- added Cassandra astyanax 
+- remove super columns
+
+Bug fixes:
+
+- remove unnecessary dependencies, upgrade dependency versions
+- fix \r bug in message body
+- clean and refactor persistence
+- clean logs
+- clean and refactor JMX operations
+
+CMB VERSION 2.2.39
+--------------------------------------------------------------------
+
+New features:
+
+- AWS signature V4 support
+- list number of subscriptions in web ui
+- various web ui usability improvements (short cut links, alternating color in tables etc.)
+- web ui for testing receive and delete message
+- support publish to Redis channels
+- support for aws sdk 1.6.12
+- logging of thread pool sizes as well as async and io wait time
+- logging of external http headers injected by nginx 
+- performance improvements for publish() (less logging, in-line api calls)
+- ability to turn cns workers on/off dynamically (via api or web ui)
+- reduced Redis key size to improve Redis memory consumption and performance
+
+Bug fixes:
+
+- various fixes for large number of subscribers (1 mio and more)
+- cqs fix to support boto aws lib
+- cns fix for multi DC support (workers to always look for messages in queues locally)
+- minor fix for aws compliant policies
+- bug fix for occasional NPE on startup (from initializing stats logging)
+- fix for message size logging
+
+CMB VERSION 2.2.37
+--------------------------------------------------------------------
+
+New features:
+
+- ability to clear queues in web ui and improved queue search
+- confirmation dialog in web ui before deleting queues, topic or users
+- new queue attributes listing number of delayed and hidden messages
+- allow to configure custom unsubscribe endpoint proxy in cmb.properties
+- optional queue attribute to zip payloads
+- use Cassandra leveled compaction strategy for message column family 
+  (significant performance improvement under load spikes) 
+
+Bug fixes:
+
+- setting content-length HTTP header correctly in all API responses 
+- fix for XML encoding of ListQueues API response to conform with SQS
+- Hector Cassandra query cleanup (slice queries instead of range slices etc.)
+- slight adjustment for Unicodes accepted in message payload
+
+
+CMB VERSION 2.2.36
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- performance optimization for raw message delivery for CNS
+- bug fix for passing request parameters to long polling ReceiveMessage()
+  calls (visibility timeout, delay seconds etc.)
+- allow multiple admin accounts
+- include jlokia for jmx monitoring
+- improved unit tests
+- improved http headers for CNS Publish()
+
+CMB VERSION 2.2.35
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- bug fix to allow maximum request length to be double the size
+  of the maximum message length (500 kb by default)
+- raw message delivery for CNS
+
+CMB VERSION 2.2.34
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- Cassandra consistency level now a parameter in cmb.properties
+  and defaulting to local quorum
+- now accepting underscores in topic names
+- security fix: only admin may impersonate other users in web ui
+- bug fix for changing topic display name in web ui
+- bug fix for v2 signature generation
+
+CMB VERSION 2.2.33
+--------------------------------------------------------------------
+
+Note: When upgrading from 2.2.32 and prior releases all Redis shards
+need to be restarted or cleared out as there are slight changes to 
+the naming of data structures inside Redis which are not backward
+compatible. However, the Cassandra schema is not changing and 
+existing queues and topics will migrate smoothly.
+
+- introducing sharded queues: sharding queues across multiple Redis
+  shards trading order for throughput-performance, number of shards
+  is a new queue attribute which defaults to 1
+- moderate performance improvements for Redis code
+- minor performance tweaks for API code 
+- various Cassandra schema tunings (read repair chance, key cache,
+  row cache etc.)
+- bug fix for URL generation for SQS endpoints
+- CNS publish workers to fall back to exponential backoff if long
+  poll feature is disabled in CQS
+- increased max message size to 256 KB for CNS and CQS
+
+CMB VERSION 2.2.32
+--------------------------------------------------------------------
+
+Maintenance release with minor fixes:
+
+- default to up to 100 connections per redis shard
+- turn off payload cache by default
+- option to send cns confirmation messages via http proxy
+- option for cns worker to take access keys from cmb.properties 
+  instead of requiring access to Cassandra
+- added cassandra schema file to build
+
+
+CMB VERSION 2.2.30
+--------------------------------------------------------------------
+
+IMPORTANT: When upgrading from an older version of CMB prior to 2.2.30
+you must drop and recreate the Cassandra schema due to a couple of
+column family changes introduced in this release!
+
+New features and bug fixes:
+
+- added optional Cassandra authentication to cmp.properties (by jancona)
+- cleaned up Cassandra schema: renamed CNSTopicSubscriptionsNew to 
+  CNSTopicSubscriptions; changed row key and columns of User column family
+  to avoid duplicate users
+- removed legacy cql code
+- upgraded to latest version of aws sdk 1.4.2.1
+- added response time percentile visualizations, by default turned off
+  in cmp.properties with cmb.stats.enable=false  
+
+
+CMB VERSION 2.2.28
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- added embedded Jetty option allowing to run cqs, cns and cns 
+  publish workers all inside the same JVM
+- added new bootstrap script cmb.sh to start embedded jetty version
+- long poll ReceiveMessage() calls now reuse established TCP connections
+  among api servers to distribute send notifications to improve performance
+- all admin UI URLs now start with /webui to make load balancer
+  configuration easier
+- support WaitTime and DelaySeconds as queue attributes (so far only
+  supported as parameters on SendMessage() and ReceiveMessage())
+- new feature to determine number of queues and topics per user 
+  (also displayed in admin UI)
+- number of shards is now a queue attribute so queues can be sharded
+  across any number of nodes in cassandra (so far default was 100
+  for all queues and could only be changed globally)
+- major performance improvement for cns topics with few subscribers 
+  (typically less than 100 subscribers)
+- bug fix for name prefix search for queues in admin UI for large number
+  of queues
+
+CMB VERSION 2.2.21
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- ship receive timestamp with internal cns messages and option
+  for cns worker to discard old messages
+- bug fix for memory leak in jmx monitoring bean for cns worker 
+- accept access key in http header (aws4 style)
+- support for WaitTime parameter in cqs ReceiveMessage() ("long
+  polling") - implementation based on servlet api 3.0 async request 
+  handlers
+- added data center flag to heart beat tables and display in
+  dashboard screens - used by long polling feature to ensure data
+  center locality
+- added redis clear cache api and added more monitoring to jmx and
+  dashboard screens
+- deepened health check api to check redis cache, cassandra ring
+  and cns worker state
+- bug fix for jetty http header parsing
+- bug fix improving performance by removing legacy code to auto-migrate
+  old-style cqs queues
+- maintain and display basic api call stats in dashboard screens
+- allow multiple api endpoints on same host
+- added pagination etc. to navigate large number of queues, topics,
+  subscriptions in web ui
+- no need to switch hosts any more with absolute urls when switching
+  between cns and cqs in web ui
+- cleaned up and improved performance of xml responses for all
+  api calls
+- performance tweaks for fast queue and topic creation specifically
+  for large numbers of queues and topics
+- increased default in-memory cache sizes to 1 mio
+- harmonized and cleaned up log4j logging
+- cns workers will bootstrap and continue to function even if cqs is
+  (temporarily) unavailable
+- bug fix for listing queues by prefix api
+- support for DelaySeconds parameter in cqs SendMessage()
+- ability to trace messages through logs by receipt handle
+
+Upgrading from version 2.2.12:
+
+Add the following column family to the CQS keyspace:
+
+create column family CQSAPIServers
+  with column_type = 'Standard'
+  and comparator = 'UTF8Type'
+  and default_validation_class = 'UTF8Type'
+  and key_validation_class = 'UTF8Type'
+  and read_repair_chance = 0.1
+  and gc_grace = 5
+  and min_compaction_threshold = 4
+  and max_compaction_threshold = 32
+  and replicate_on_write = true
+  and compaction_strategy = 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy';
+  
+create column family CQSQueuesByUserId
+  with column_type = 'Standard'
+  and comparator = 'UTF8Type'
+  and default_validation_class = 'UTF8Type'
+  and key_validation_class = 'UTF8Type'
+  and read_repair_chance = 0.1
+  and gc_grace = 5
+  and min_compaction_threshold = 4
+  and max_compaction_threshold = 32
+  and replicate_on_write = true
+  and compaction_strategy = 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy';
+  
+Add the following column family to the CNS keyspace:
+  
+create column family CNSAPIServers  
+  with column_type = 'Standard'
+  and comparator = 'UTF8Type'
+  and default_validation_class = 'UTF8Type'
+  and key_validation_class = 'UTF8Type'
+  and read_repair_chance = 0.1
+  and gc_grace = 5
+  and min_compaction_threshold = 4
+  and max_compaction_threshold = 32
+  and replicate_on_write = true
+  and compaction_strategy = 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy';
+
+CMB VERSION 2.2.12
+--------------------------------------------------------------------
+
+New features and bug fixes:
+
+- added support for Cassandra 1.1.X (note there are now different schema
+  files for Cassandra 1.0.X and 1.1.X)
+- cns worker to recreate cqs queues on the fly when needed
+- centralized monitoring and management of cns workers through cns
+  endpoint and admin UI  
+- cns worker to cache cqs queue urls to ease load on cns api
+- adjusted default size of key parameters for cns worker in 
+  cmb.properties
+- http default timeout of 5 sec for slow endpoints (can be adjusted
+  in cmb.properties)
+- bug fix: allow publishing of blank messages
+- cns worker to temporarily suspend slow or failing endpoints if more 
+  than n bad responses are encountered in a rolling window of 60 seconds   
+  (threshold can be adjusted in cmb.properties)
+- offer configurable white list of acceptable http return codes
+  (such as 404 if desired)
+- simple login and session management for admin ui to distinguish 
+  admin and normal users. Note: Currently the only admin user is 
+  the one configured as cmb.cns.user in cmb.properties, typically
+  "cns_internal". Access the admin UI from now on using this link:
+  http://adminhost:adminport/UserLogin
+- various improvements for endpoint servlet (testing tool for cns)
+  such as introducing a duplicate counter 
+  
+Upgrading from version 2.2.11:
+
+1. Add the following column family to the CNS schema:
+
+create column family CNSWorkers
+  with column_type = 'Standard'
+  and comparator = 'UTF8Type'
+  and default_validation_class = 'UTF8Type'
+  and key_validation_class = 'UTF8Type'
+  and read_repair_chance = 0.1
+  and gc_grace = 5
+  and min_compaction_threshold = 4
+  and max_compaction_threshold = 32
+  and replicate_on_write = true
+  and compaction_strategy = 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy';
+  
+2. Add or adjust the following cmb.properties:
+
+adjusted properties:
+
+cmb.cns.publisher.numDeliveryHandlers=128
+cmb.cns.publisher.numReDeliveryHandlers=256
+cmb.cns.publisher.deliveryHandlerJobQueueLimit=1000
+cmb.cns.publisher.reDeliveryHandlerJobQueueLimit=5000
+cmb.cns.publisher.maxSubscriptionsPerEPPublishJob=100
+cmb.cns.publisher.http.connectionPoolSize=250
+
+new properties:
+
+cmb.cns.publisher.http.httpTimeoutSeconds=5
+cmb.cns.publisher.http.acceptableStatusCodes=200
+
+CMB VERSION 2.2.11
+--------------------------------------------------------------------
+
+- bug fix: added invalid parameter validation to cns/cqs addpermission api
+- bug fix: throw blank action error for cns/cqs addpermission
+- bug fix: allow * for cns permissions
+- bug fix: delete subscription if sending of confirmation message fails
+- allow sqs endpoints
+
+CMB VERSION 2.2.10
+--------------------------------------------------------------------
+
+- bug fix: cqs endpoint publisher to not remember identity of last user
+- bug fix: drop cns messages if delivery fails for cqs or email endpoints 
+- added more detail to redis configuration in readme
+- adjusted folder structure to simplify build process
+
+CMB VERSION 2.2.9
+--------------------------------------------------------------------
+
+- Initial Open Source release
